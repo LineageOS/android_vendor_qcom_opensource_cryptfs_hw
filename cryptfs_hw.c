@@ -108,12 +108,14 @@ static unsigned char* get_tmp_passwd(const char* passwd)
             memset(tmp_passwd, 0, MAX_PASSWORD_LEN);
             passwd_len = (strlen(passwd) > MAX_PASSWORD_LEN) ? MAX_PASSWORD_LEN : strlen(passwd);
             memcpy(tmp_passwd, passwd, passwd_len);
+SLOGE("%s memcopy sucess\n", __func__);
         } else {
             SLOGE("%s: Failed to allocate memory for tmp passwd \n", __func__);
         }
     } else {
         SLOGE("%s: Passed argument is NULL \n", __func__);
     }
+SLOGE("%s: sucess return with password: %s\n", __func__, tmp_passwd);
     return tmp_passwd;
 }
 
@@ -197,17 +199,22 @@ static int set_key(const char* currentpasswd, const char* passwd, const char* en
     if (is_hw_disk_encryption(enc_mode) && load_qseecom_library()) {
         unsigned char* tmp_passwd = get_tmp_passwd(passwd);
         unsigned char* tmp_currentpasswd = get_tmp_passwd(currentpasswd);
+SLOGE("%s: go\n", __func__);
         if(tmp_passwd) {
+SLOGE("%s: temp pass: %s\n", __func__, tmp_passwd);
             if (operation == UPDATE_HW_DISK_ENC_KEY) {
                 if (tmp_currentpasswd) {
                    err = qseecom_update_key(map_usage(QSEECOM_DISK_ENCRYPTION), tmp_currentpasswd, tmp_passwd);
+SLOGE("%s: qseecom_update_key return %i\n", __func__, err);
                    secure_memset(tmp_currentpasswd, 0, MAX_PASSWORD_LEN);
                 }
             } else if (operation == SET_HW_DISK_ENC_KEY) {
                 err = qseecom_create_key(map_usage(QSEECOM_DISK_ENCRYPTION), tmp_passwd);
+SLOGE("%s: qseecom_create_key return %i\n", __func__, err);
             }
             if(err < 0) {
                 if(ERR_MAX_PASSWORD_ATTEMPTS == err)
+SLOGE("%s: wipe data called\n", __func__);
                     wipe_userdata();
             }
             secure_memset(tmp_passwd, 0, MAX_PASSWORD_LEN);
@@ -215,6 +222,7 @@ static int set_key(const char* currentpasswd, const char* passwd, const char* en
             free(tmp_currentpasswd);
         }
     }
+SLOGE("%s: exit with %i\n", __func__, err);
     return err;
 }
 
