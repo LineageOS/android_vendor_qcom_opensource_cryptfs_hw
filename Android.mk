@@ -9,6 +9,7 @@ commonSharedLibraries := \
                         libcutils \
                         libutils \
                         libdl \
+                        liblog \
                         libhardware
 commonIncludes := \
                   hardware/libhardware/include/hardware/
