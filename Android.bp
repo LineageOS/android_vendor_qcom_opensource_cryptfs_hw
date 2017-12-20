@@ -18,6 +18,9 @@ cc_library_shared {
 
     product_variables: {
         lineage: {
+            should_skip_waiting_for_qsee: {
+                cflags: ["-DSKIP_WAITING_FOR_QSEE"],
+            },
             supports_legacy_hw_fde: {
                 cflags: ["-DLEGACY_HW_DISK_ENCRYPTION"],
             },
