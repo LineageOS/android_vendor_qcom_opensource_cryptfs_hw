@@ -375,6 +375,12 @@ static unsigned char* get_tmp_passwd(const char* passwd)
     return tmp_passwd;
 }
 
+#ifdef SKIP_WAITING_FOR_QSEE
+int is_qseecom_up()
+{
+    return 1;
+}
+#else
 int is_qseecom_up()
 {
     int i = 0;
@@ -392,6 +398,7 @@ int is_qseecom_up()
     }
     return 0;
 }
+#endif
 
 /*
  * For NON-ICE targets, it would return 0 on success. On ICE based targets,
