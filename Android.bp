@@ -21,6 +21,9 @@ cc_library_shared {
             device_support_legacy_hwfde: {
                 cflags: ["-DLEGACY_HW_DISK_ENCRYPTION"],
             },
+            device_support_wait_for_qsee: {
+                cflags: ["-DWAIT_FOR_QSEE"],
+            },
         },
     },
 
