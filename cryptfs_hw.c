@@ -97,6 +97,12 @@ static inline void* secure_memset(void* v, int c , size_t n)
 }
 
 #ifdef LEGACY_HW_DISK_ENCRYPTION
+#ifdef SKIP_WAITING_FOR_QSEE
+static int is_qseecom_up()
+{
+    return 1;
+}
+#else
 static int is_qseecom_up()
 {
     int i = 0;
@@ -110,6 +116,7 @@ static int is_qseecom_up()
     }
     return 0;
 }
+#endif
 
 static int load_qseecom_library()
 {
