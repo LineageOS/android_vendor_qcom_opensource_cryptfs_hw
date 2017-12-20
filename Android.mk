@@ -25,6 +25,7 @@ LOCAL_MODULE_TAGS       := optional
 LOCAL_MODULE:= libcryptfs_hw
 LOCAL_SHARED_LIBRARIES := $(commonSharedLibraries)
 
+LOCAL_PROPRIETARY_MODULE := true
 LOCAL_MODULE_OWNER := qcom
 
 ifeq ($(TARGET_SWV8_DISK_ENCRYPTION),true)
