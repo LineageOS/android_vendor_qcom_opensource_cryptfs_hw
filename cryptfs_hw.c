@@ -42,6 +42,14 @@
 #include "hardware.h"
 #include "cryptfs_hw.h"
 
+#ifdef LEGACY_HW_DISK_ENCRYPTION
+#if defined(__LP64__)
+#define QSEECOM_LIBRARY_PATH "/vendor/lib64/libQSEEComAPI.so"
+#else
+#define QSEECOM_LIBRARY_PATH "/vendor/lib/libQSEEComAPI.so"
+#endif
+#endif
+
 /*
  * When device comes up or when user tries to change the password, user can
  * try wrong password upto a certain number of times. If user enters wrong
@@ -60,6 +68,13 @@
 static unsigned int cpu_id[] = {
 	239, /* MSM8939 SOC ID */
 };
+
+#ifdef LEGACY_HW_DISK_ENCRYPTION
+static int loaded_library = 0;
+static int (*qseecom_create_key)(int, void*);
+static int (*qseecom_update_key)(int, void*, void*);
+static int (*qseecom_wipe_key)(int);
+#endif
 
 #define CRYPTFS_HW_KMS_CLEAR_KEY			0
 #define CRYPTFS_HW_KMS_WIPE_KEY				1
@@ -85,6 +100,24 @@ static inline void* secure_memset(void* v, int c , size_t n)
 	return v;
 }
 
+#ifdef LEGACY_HW_DISK_ENCRYPTION
+static int cryptfs_hw_create_key(enum cryptfs_hw_key_management_usage_type usage,
+					unsigned char *hash32)
+{
+	return qseecom_create_key(usage, hash32);
+}
+
+static int cryptfs_hw_wipe_key(enum cryptfs_hw_key_management_usage_type usage)
+{
+	return qseecom_wipe_key(usage);
+}
+
+static int cryptfs_hw_update_key(enum cryptfs_hw_key_management_usage_type usage,
+			unsigned char *current_hash32, unsigned char *new_hash32)
+{
+	return qseecom_update_key(usage, current_hash32, new_hash32);
+}
+#else
 static size_t memscpy(void *dst, size_t dst_size, const void *src, size_t src_size)
 {
 	size_t min_size = (dst_size < src_size) ? dst_size : src_size;
@@ -237,6 +270,7 @@ static int cryptfs_hw_update_key(enum cryptfs_hw_key_management_usage_type usage
 	close(qseecom_fd);
 	return ret;
 }
+#endif
 
 static int map_usage(int usage)
 {
@@ -277,7 +311,11 @@ static int is_qseecom_up()
     char value[PROPERTY_VALUE_MAX] = {0};
 
     for (; i<CRYPTFS_HW_UP_CHECK_COUNT; i++) {
+#ifdef LEGACY_HW_DISK_ENCRYPTION
+        property_get("sys.keymaster.loaded", value, "");
+#else
         property_get("sys.listeners.registered", value, "");
+#endif
         if (!strncmp(value, "true", PROPERTY_VALUE_MAX))
             return 1;
         usleep(100000);
@@ -286,6 +324,50 @@ static int is_qseecom_up()
     return 0;
 }
 
+#ifdef LEGACY_HW_DISK_ENCRYPTION
+static int load_qseecom_library()
+{
+    const char *error = NULL;
+    if (loaded_library)
+        return loaded_library;
+
+    if (!is_qseecom_up()) {
+        SLOGE("Timed out waiting for QSEECom listeners. Aborting FDE key operation");
+        return 0;
+    }
+
+    void * handle = dlopen(QSEECOM_LIBRARY_PATH, RTLD_NOW);
+    if (handle) {
+        dlerror(); /* Clear any existing error */
+        *(void **) (&qseecom_create_key) = dlsym(handle, "QSEECom_create_key");
+
+        if ((error = dlerror()) == NULL) {
+            SLOGD("Success loading QSEECom_create_key \n");
+            *(void **) (&qseecom_update_key) = dlsym(handle, "QSEECom_update_key_user_info");
+            if ((error = dlerror()) == NULL) {
+                SLOGD("Success loading QSEECom_update_key_user_info\n");
+                *(void **) (&qseecom_wipe_key) = dlsym(handle, "QSEECom_wipe_key");
+                if ((error = dlerror()) == NULL) {
+                    loaded_library = 1;
+                    SLOGD("Success loading QSEECom_wipe_key \n");
+                }
+                else
+                    SLOGE("Error %s loading symbols for QSEECom APIs \n", error);
+            }
+            else
+                SLOGE("Error %s loading symbols for QSEECom APIs \n", error);
+        }
+    } else {
+        SLOGE("Could not load libQSEEComAPI.so \n");
+    }
+
+    if (error)
+        dlclose(handle);
+
+    return loaded_library;
+}
+#endif
+
 /*
  * For NON-ICE targets, it would return 0 on success. On ICE based targets,
  * it would return key index in the ICE Key LUT
@@ -293,7 +375,11 @@ static int is_qseecom_up()
 static int set_key(const char* currentpasswd, const char* passwd, const char* enc_mode, int operation)
 {
     int err = -1;
-    if (is_hw_disk_encryption(enc_mode) && is_qseecom_up()) {
+    if (is_hw_disk_encryption(enc_mode) && is_qseecom_up()
+#ifdef LEGACY_HW_DISK_ENCRYPTION
+            && load_qseecom_library()
+#endif
+            ) {
         unsigned char* tmp_passwd = get_tmp_passwd(passwd);
         unsigned char* tmp_currentpasswd = get_tmp_passwd(currentpasswd);
         if (tmp_passwd) {
@@ -413,7 +499,11 @@ int is_ice_enabled(void)
 
 int clear_hw_device_encryption_key()
 {
-	if(is_qseecom_up())
+	if (is_qseecom_up()
+#ifdef LEGACY_HW_DISK_ENCRYPTION
+			&& load_qseecom_library()
+#endif
+			)
 		return cryptfs_hw_wipe_key(map_usage(CRYPTFS_HW_KM_USAGE_DISK_ENCRYPTION));
 	return 0;
 }
@@ -433,8 +523,21 @@ static int get_keymaster_version()
 
 int should_use_keymaster()
 {
+#ifdef LEGACY_HW_DISK_ENCRYPTION
+    /*
+     * HW FDE key would be tied to keymaster only if
+     * new Keymaster is available
+     */
+    int rc = 0;
+    if (get_keymaster_version() != KEYMASTER_MODULE_API_VERSION_1_0) {
+        SLOGI("Keymaster version is not 1.0");
+        return rc;
+    }
+#else
     /*
      * HW FDE key should be tied to keymaster
      */
+#endif
+
     return 1;
 }
