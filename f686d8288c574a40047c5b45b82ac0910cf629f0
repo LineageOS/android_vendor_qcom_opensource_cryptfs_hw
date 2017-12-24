@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "df4518c5_29411450",
+        "filename": "cryptfs_hw.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 529,
+      "author": {
+        "id": 4550
+      },
+      "writtenOn": "2017-12-24T10:08:07Z",
+      "side": 1,
+      "message": "This comment is no longer valid, it was removed in a previous commit",
+      "range": {
+        "startLine": 529,
+        "startChar": 7,
+        "endLine": 529,
+        "endChar": 47
+      },
+      "revId": "f686d8288c574a40047c5b45b82ac0910cf629f0",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
