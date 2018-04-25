@@ -42,6 +42,8 @@
 #include "hardware.h"
 #include "cryptfs_hw.h"
 
+#define LOG_TAG "Cryptfs_hw"
+
 #ifdef LEGACY_HW_DISK_ENCRYPTION
 #if defined(__LP64__)
 #define QSEECOM_LIBRARY_PATH "/vendor/lib64/libQSEEComAPI.so"
