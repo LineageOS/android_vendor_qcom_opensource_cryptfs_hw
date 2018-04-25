@@ -26,6 +26,8 @@
  * IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+#define LOG_TAG "Cryptfs_hw"
+
 #include <stdlib.h>
 #include <string.h>
 #include <sys/types.h>
