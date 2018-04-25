@@ -41,6 +41,8 @@
 #include "keymaster_common.h"
 #include "hardware.h"
 
+#define LOG_TAG "Cryptfs_hw"
+
 #if defined(__LP64__)
 #define QSEECOM_LIBRARY_PATH "/vendor/lib64/libQSEEComAPI.so"
 #else
