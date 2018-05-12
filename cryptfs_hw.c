@@ -26,6 +26,8 @@
  * IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+#define LOG_TAG "Cryptfs_hw"
+
 #include <stdlib.h>
 #include <string.h>
 #include <sys/limits.h>
@@ -41,8 +43,6 @@
 #include "keymaster_common.h"
 #include "hardware.h"
 #include "cryptfs_hw.h"
-
-#define LOG_TAG "Cryptfs_hw"
 
 #ifdef LEGACY_HW_DISK_ENCRYPTION
 #if defined(__LP64__)
