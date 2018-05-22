@@ -545,8 +545,16 @@ int should_use_keymaster()
 #else
     /*
      * HW FDE key should be tied to keymaster
+     * if version is above 0.3. this is to
+     * support msm8909 go target.
      */
+
+    int rc = 1;
+    if (get_keymaster_version() == KEYMASTER_MODULE_API_VERSION_0_3) {
+        SLOGI("Keymaster version is 0.3");
+        rc = 0;
+    }
 #endif
 
-    return 1;
+    return rc;
 }
