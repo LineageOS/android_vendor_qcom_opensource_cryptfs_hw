@@ -43,7 +43,11 @@ int update_hw_device_encryption_key(const char*, const char*, const char*);
 int clear_hw_device_encryption_key();
 unsigned int is_hw_disk_encryption(const char*);
 int is_ice_enabled(void);
+#ifdef LEGACY_HW_DISK_ENCRYPTION
+int should_use_keymaster();
+#else
 inline int should_use_keymaster(){return 1;}
+#endif
 int set_ice_param(int flag);
 
 #ifdef __cplusplus
