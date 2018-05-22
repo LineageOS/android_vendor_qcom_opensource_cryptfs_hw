@@ -37,6 +37,10 @@
 #include "cutils/log.h"
 #include "cutils/properties.h"
 #include "cryptfs_hw.h"
+#ifdef LEGACY_HW_DISK_ENCRYPTION
+#include <hardware/hardware.h>
+#include <hardware/keymaster_common.h>
+#endif
 #include <vendor/qti/hardware/cryptfshw/1.0/ICryptfsHw.h>
 
 using android::sp;
@@ -126,3 +130,31 @@ int clear_hw_device_encryption_key()
     return rc;
 }
 
+#ifdef LEGACY_HW_DISK_ENCRYPTION
+static int get_keymaster_version()
+{
+    int rc = -1;
+    const hw_module_t* mod;
+    rc = hw_get_module_by_class(KEYSTORE_HARDWARE_MODULE_ID, NULL, &mod);
+    if (rc) {
+        ALOGE("could not find any keystore module");
+        return rc;
+    }
+    return mod->module_api_version;
+}
+
+int should_use_keymaster()
+{
+    /*
+     * HW FDE key should be tied to keymaster
+     * if version is above 0.3. this is to
+     * support msm8909 go target.
+     */
+    int rc = 1;
+    if (get_keymaster_version() == KEYMASTER_MODULE_API_VERSION_0_3) {
+        ALOGI("Keymaster version is 0.3");
+        rc = 0;
+    }
+    return rc;
+}
+#endif
