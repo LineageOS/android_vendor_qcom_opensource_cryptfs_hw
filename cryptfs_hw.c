@@ -34,12 +34,13 @@
 #include <fcntl.h>
 #include <dirent.h>
 #include <dlfcn.h>
+#include <errno.h>
 #include <linux/qseecom.h>
+#include <hardware/keymaster_common.h>
+#include <hardware/hardware.h>
 #include "cutils/log.h"
 #include "cutils/properties.h"
 #include "cutils/android_reboot.h"
-#include "keymaster_common.h"
-#include "hardware.h"
 #include "cryptfs_hw.h"
 
 /*
@@ -273,7 +274,7 @@ static int is_qseecom_up()
     char value[PROPERTY_VALUE_MAX] = {0};
 
     for (; i<CRYPTFS_HW_UP_CHECK_COUNT; i++) {
-        property_get("sys.keymaster.loaded", value, "");
+        property_get("vendor.sys.keymaster.loaded", value, "");
         if (!strncmp(value, "true", PROPERTY_VALUE_MAX))
             return 1;
         usleep(100000);
