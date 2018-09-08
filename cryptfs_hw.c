@@ -327,6 +327,7 @@ static int cryptfs_hw_update_key(enum cryptfs_hw_key_management_usage_type usage
 	close(qseecom_fd);
 	return ret;
 }
+#endif
 
 static int map_usage(int usage)
 {
@@ -361,13 +362,17 @@ static unsigned char* get_tmp_passwd(const char* passwd)
     return tmp_passwd;
 }
 
-static int is_qseecom_up()
+int is_qseecom_up()
 {
     int i = 0;
     char value[PROPERTY_VALUE_MAX] = {0};
 
     for (; i<CRYPTFS_HW_UP_CHECK_COUNT; i++) {
+#ifdef LEGACY_HW_DISK_ENCRYPTION
+        property_get("sys.keymaster.loaded", value, "");
+#else
         property_get("vendor.sys.keymaster.loaded", value, "");
+#endif	
         if (!strncmp(value, "true", PROPERTY_VALUE_MAX))
             return 1;
         usleep(100000);
@@ -468,8 +473,20 @@ static int get_keymaster_version()
 
 int should_use_keymaster()
 {
+#ifdef LEGACY_HW_DISK_ENCRYPTION	
+    /*
+     * HW FDE key should be tied to keymaster only if
+     * new Keymaster is available
+     */
+    int rc = 0;
+    if (get_keymaster_version() != KEYMASTER_MODULE_API_VERSION_1_0) {
+        SLOGI("Keymaster version is not 1.0");
+        return rc;
+    }
+#else
     /*
      * HW FDE key should be tied to keymaster
      */
+#endif	
     return 1;
 }
