@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c9f63993_bbcc5947",
+        "filename": "cryptfs_hw.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 559,
+      "author": {
+        "id": 4550
+      },
+      "writtenOn": "2018-10-28T23:07:52Z",
+      "side": 1,
+      "message": "This will break LEGACY_HW_DISK_ENCRYPTION logic",
+      "range": {
+        "startLine": 559,
+        "startChar": 11,
+        "endLine": 559,
+        "endChar": 13
+      },
+      "revId": "ff2c935cd57de876ea269972f97749e031336e3d",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
