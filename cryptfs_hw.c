@@ -532,15 +532,16 @@ static int get_keymaster_version()
 
 int should_use_keymaster()
 {
+    int rc = 1;
+
 #ifdef LEGACY_HW_DISK_ENCRYPTION
     /*
      * HW FDE key would be tied to keymaster only if
      * new Keymaster is available
      */
-    int rc = 0;
     if (get_keymaster_version() != KEYMASTER_MODULE_API_VERSION_1_0) {
         SLOGI("Keymaster version is not 1.0");
-        return rc;
+        rc = 0;
     }
 #else
     /*
@@ -548,8 +549,6 @@ int should_use_keymaster()
      * if version is above 0.3. this is to
      * support msm8909 go target.
      */
-
-    int rc = 1;
     if (get_keymaster_version() == KEYMASTER_MODULE_API_VERSION_0_3) {
         SLOGI("Keymaster version is 0.3");
         rc = 0;
