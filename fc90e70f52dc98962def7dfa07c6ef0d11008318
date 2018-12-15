@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bf346d10_f6fc7912",
+        "filename": "cryptfs_hw.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 13648
+      },
+      "writtenOn": "2018-12-15T21:41:27Z",
+      "side": 1,
+      "message": "Typo",
+      "revId": "fc90e70f52dc98962def7dfa07c6ef0d11008318",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    }
+  ]
+}
