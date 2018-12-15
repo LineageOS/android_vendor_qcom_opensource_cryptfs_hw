@@ -387,7 +387,7 @@ int is_qseecom_up()
     char value[PROPERTY_VALUE_MAX] = {0};
 
     for (; i<CRYPTFS_HW_UP_CHECK_COUNT; i++) {
-#ifdef LEGACY_HW_DISK_ENCRYPTION
+#if definde(LEGACY_HW_DISK_ENCRYPTION) || defined(LEGACY_QSEECOM)
         property_get("sys.keymaster.loaded", value, "");
 #else
         property_get("vendor.sys.keymaster.loaded", value, "");
