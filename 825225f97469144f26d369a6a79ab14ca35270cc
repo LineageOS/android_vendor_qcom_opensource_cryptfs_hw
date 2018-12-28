@@ -46,6 +46,30 @@
       "revId": "825225f97469144f26d369a6a79ab14ca35270cc",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7d1b657_02bff17f",
+        "filename": "cryptfs_hw.c",
+        "patchSetId": 6
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 4550
+      },
+      "writtenOn": "2018-12-28T22:51:02Z",
+      "side": 1,
+      "message": "Looks like this commit is missing: https://github.com/LineageOS/android_vendor_qcom_opensource_cryptfs_hw/commit/2ab4e3f1067e4e18ace7c3106d826e751e0a2c9d\n\nI wonder if we should pick it given the prop is different",
+      "parentUuid": "3e469d61_1e055d89",
+      "range": {
+        "startLine": 376,
+        "startChar": 0,
+        "endLine": 392,
+        "endChar": 1
+      },
+      "revId": "825225f97469144f26d369a6a79ab14ca35270cc",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
     }
   ]
 }
