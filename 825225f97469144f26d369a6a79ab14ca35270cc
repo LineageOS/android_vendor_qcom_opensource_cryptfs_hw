@@ -94,6 +94,30 @@
       "revId": "825225f97469144f26d369a6a79ab14ca35270cc",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec3f154e_81dee79d",
+        "filename": "cryptfs_hw.c",
+        "patchSetId": 6
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 4550
+      },
+      "writtenOn": "2018-12-29T09:21:19Z",
+      "side": 1,
+      "message": "You can\u0027t drop it, it is needed to get encryption working at least on legacy devices",
+      "parentUuid": "1c2c3daf_984ed82b",
+      "range": {
+        "startLine": 376,
+        "startChar": 0,
+        "endLine": 392,
+        "endChar": 1
+      },
+      "revId": "825225f97469144f26d369a6a79ab14ca35270cc",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
     }
   ]
 }
