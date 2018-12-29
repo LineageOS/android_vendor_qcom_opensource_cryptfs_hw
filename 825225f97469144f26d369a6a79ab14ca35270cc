@@ -70,6 +70,30 @@
       "revId": "825225f97469144f26d369a6a79ab14ca35270cc",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c2c3daf_984ed82b",
+        "filename": "cryptfs_hw.c",
+        "patchSetId": 6
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 10258
+      },
+      "writtenOn": "2018-12-29T05:20:00Z",
+      "side": 1,
+      "message": "If you pick that you gonna reverse wait for qsee logic AGAIN lol. I think wait for qsee is not needed on most devices, given it\u0027s disabled on 15.1 by default and ditched by CAF on pie. The nightmare ends if we could drop the is_qseecom_up check inside LEGACY_HW_DISK_ENCRYPTION",
+      "parentUuid": "b7d1b657_02bff17f",
+      "range": {
+        "startLine": 376,
+        "startChar": 0,
+        "endLine": 392,
+        "endChar": 1
+      },
+      "revId": "825225f97469144f26d369a6a79ab14ca35270cc",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
     }
   ]
 }
