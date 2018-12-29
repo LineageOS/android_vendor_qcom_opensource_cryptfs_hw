@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e20dcfc7_be75a60c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 11801
+      },
+      "writtenOn": "2018-12-29T14:20:26Z",
+      "side": 1,
+      "message": "Featurize",
+      "range": {
+        "startLine": 7,
+        "startChar": 12,
+        "endLine": 7,
+        "endChar": 22
+      },
+      "revId": "51ca7e3028ef3931cecef81fac9358342375ce49",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    }
+  ]
+}
