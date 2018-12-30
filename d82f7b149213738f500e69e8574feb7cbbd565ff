@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "857b24da_3d31ff6a",
+        "filename": "cryptfs_hw.c",
+        "patchSetId": 7
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 2936
+      },
+      "writtenOn": "2018-12-30T04:41:42Z",
+      "side": 1,
+      "message": "Does this need to be guarded by LEGACY_HW_DISK_ENCRYPTION? There are no other users of this function.",
+      "range": {
+        "startLine": 378,
+        "startChar": 4,
+        "endLine": 378,
+        "endChar": 17
+      },
+      "revId": "d82f7b149213738f500e69e8574feb7cbbd565ff",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    }
+  ]
+}
