@@ -63,7 +63,7 @@ int set_ice_param(int flag)
     return rc;
 }
 #else
-int set_ice_param(int flag)
+int set_ice_param(__unused int flag)
 {
 	return -1;
 }
