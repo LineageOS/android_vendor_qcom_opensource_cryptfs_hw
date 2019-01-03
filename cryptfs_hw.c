@@ -70,10 +70,8 @@ static int (*qseecom_update_key)(int, void*, void*);
 static int (*qseecom_wipe_key)(int);
 #endif
 
-#define CRYPTFS_HW_KMS_CLEAR_KEY			0
 #define CRYPTFS_HW_KMS_WIPE_KEY				1
 #define CRYPTFS_HW_UP_CHECK_COUNT			10
-#define CRYPTFS_HW_CLEAR_KEY_FAILED			-11
 #define CRYPTFS_HW_KMS_MAX_FAILURE			-10
 #define CRYPTFS_HW_UPDATE_KEY_FAILED			-9
 #define CRYPTFS_HW_WIPE_KEY_FAILED			-8
@@ -290,27 +288,11 @@ int set_ice_param(int flag)
 	return ret;
 }
 #else
-int set_ice_param(int flag)
+int set_ice_param(__unused int flag)
 {
 	return -1;
 }
 #endif
-
-static int cryptfs_hw_clear_key(enum cryptfs_hw_key_management_usage_type usage)
-{
-	int32_t ret;
-
-	ret = __cryptfs_hw_wipe_clear_key(usage, CRYPTFS_HW_KMS_CLEAR_KEY);
-	if (ret) {
-		SLOGE("Error::ioctl call to wipe the encryption key for usage %d failed with ret = %d, errno = %d\n",
-			usage, ret, errno);
-		ret = CRYPTFS_HW_CLEAR_KEY_FAILED;
-	} else {
-		SLOGE("SUCCESS::ioctl call to wipe the encryption key for usage %d success with ret = %d\n",
-			usage, ret);
-	}
-	return ret;
-}
 
 static int cryptfs_hw_update_key(enum cryptfs_hw_key_management_usage_type usage,
 			unsigned char *current_hash32, unsigned char *new_hash32)
