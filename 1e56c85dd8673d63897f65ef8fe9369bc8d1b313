@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bcbdbdcc_7c31a0b3",
+        "filename": "cryptfs_hw.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 490,
+      "author": {
+        "id": 16208
+      },
+      "writtenOn": "2019-03-03T15:28:03Z",
+      "side": 1,
+      "message": "remove",
+      "revId": "1e56c85dd8673d63897f65ef8fe9369bc8d1b313",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdf03013_999224c6",
+        "filename": "cryptfs_hw.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 16208
+      },
+      "writtenOn": "2019-03-03T15:28:03Z",
+      "side": 1,
+      "message": "return 0",
+      "revId": "1e56c85dd8673d63897f65ef8fe9369bc8d1b313",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aef66d15_be9b7112",
+        "filename": "cryptfs_hw.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 495,
+      "author": {
+        "id": 16208
+      },
+      "writtenOn": "2019-03-03T15:28:03Z",
+      "side": 1,
+      "message": "return 1",
+      "revId": "1e56c85dd8673d63897f65ef8fe9369bc8d1b313",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    }
+  ]
+}
