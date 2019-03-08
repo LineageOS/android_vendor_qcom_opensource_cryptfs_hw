@@ -24,6 +24,9 @@ cc_library_shared {
             supports_legacy_hw_fde: {
                 cflags: ["-DLEGACY_HW_DISK_ENCRYPTION"],
             },
+            uses_metadata_as_fde_key: {
+                cflags: ["-DUSE_METADATA_FOR_KEY"],
+            },
         },
     },
 
