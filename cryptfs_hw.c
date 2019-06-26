@@ -68,8 +68,6 @@
 
 #define CRYPTFS_HW_ALGO_MODE_AES_XTS 			0x3
 
-#define METADATA_PARTITION_NAME "/dev/block/bootdevice/by-name/metadata"
-
 enum cryptfs_hw_key_management_usage_type {
 	CRYPTFS_HW_KM_USAGE_DISK_ENCRYPTION		= 0x01,
 	CRYPTFS_HW_KM_USAGE_FILE_ENCRYPTION		= 0x02,
@@ -179,7 +177,7 @@ static int cryptfs_hw_wipe_key(enum cryptfs_hw_key_management_usage_type usage)
 int set_ice_param(int flag)
 {
 	int  qseecom_fd, ret = -1;
-	struct qseecom_ice_data_t ice_data;
+	struct qseecom_ice_data_t ice_data = {0};
 	qseecom_fd = open("/dev/qseecom", O_RDWR);
 	if (qseecom_fd < 0)
 		return ret;
@@ -363,19 +361,6 @@ int is_ice_enabled(void)
 {
   char prop_storage[PATH_MAX];
   int storage_type = 0;
-  int fd;
-
-  /*
-   * Since HW FDE is a compile time flag (due to QSSI requirements),
-   * this API conflicts with Metadata encryption even when ICE is
-   * enabled, as it encrypts the whole disk instead. Adding this
-   * workaround to return 0 if metadata partition is present.
-   */
-
-  if (access(METADATA_PARTITION_NAME, F_OK) == 0) {
-    SLOGI("Metadata partition, returning false");
-    return 0;
-  }
 
   if (property_get("ro.boot.bootdevice", prop_storage, "")) {
     if (strstr(prop_storage, "ufs")) {
