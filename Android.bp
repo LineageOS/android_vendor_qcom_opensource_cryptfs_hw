@@ -1,4 +1,4 @@
-sourceFiles = ["cryptfs_hw.c"]
+sourceFiles = ["cryptfs_hw.cpp"]
 
 commonSharedLibraries = [
     "libcutils",
@@ -6,17 +6,23 @@ commonSharedLibraries = [
     "libdl",
     "libhardware",
     "liblog",
+    "libhwbinder",
+    "libhidlbase",
+    "libhidltransport",
+    "libbinder",
+    "vendor.qti.hardware.cryptfshw@1.0",
 ]
 
 cc_library_shared {
     name: "libcryptfs_hw",
     header_libs: ["qseecom-kernel-headers",
-                  "libhardware_headers"],
-    cflags: ["-DCONFIG_HW_DISK_ENCRYPTION"],
+                  "libhardware_headers",
+                  "libcryptfshw_hidl_headers",],
     srcs: sourceFiles,
     shared_libs: commonSharedLibraries,
 
     owner: "qti",
+    product_specific: true,
 }
 
 cc_library_headers {
