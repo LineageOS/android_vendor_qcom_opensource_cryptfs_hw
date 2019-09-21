@@ -32,7 +32,6 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <errno.h>
-#include <linux/qseecom.h>
 #include "cutils/log.h"
 #include "cutils/properties.h"
 #include "cryptfs_hw.h"
@@ -46,7 +45,6 @@ using ::android::hardware::Void;
 #define QTI_ICE_STORAGE_UFS				1
 #define QTI_ICE_STORAGE_SDCC				2
 
-#ifdef QSEECOM_IOCTL_SET_ICE_INFO
 int set_ice_param(int flag)
 {
     int rc = -1;
@@ -58,12 +56,6 @@ int set_ice_param(int flag)
     rc = cryptfshwService->setIceParam(flag);
     return rc;
 }
-#else
-int set_ice_param(int flag)
-{
-	return -1;
-}
-#endif
 
 int set_hw_device_encryption_key(const char* passwd, const char* enc_mode)
 {
