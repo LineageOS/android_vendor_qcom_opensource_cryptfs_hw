@@ -13,8 +13,7 @@ commonSharedLibraries = [
 
 cc_library_shared {
     name: "libcryptfs_hw",
-    header_libs: ["libhardware_headers",
-                  "libcryptfshw_hidl_headers",],
+    header_libs: ["libhardware_headers"],
     srcs: sourceFiles,
     shared_libs: commonSharedLibraries,
 
