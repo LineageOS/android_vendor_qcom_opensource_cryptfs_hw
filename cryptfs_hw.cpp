@@ -40,7 +40,7 @@
 #include <hardware/hardware.h>
 #include <hardware/keymaster_common.h>
 #include "cryptfs_hw.h"
-#include "CryptfsHw.h"
+#include <vendor/qti/hardware/cryptfshw/1.0/ICryptfsHw.h>
 
 using android::sp;
 using vendor::qti::hardware::cryptfshw::V1_0::ICryptfsHw;
