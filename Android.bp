@@ -6,9 +6,7 @@ commonSharedLibraries = [
     "libdl",
     "libhardware",
     "liblog",
-    "libhwbinder",
     "libhidlbase",
-    "libhidltransport",
     "libbinder",
     "vendor.qti.hardware.cryptfshw@1.0",
 ]
