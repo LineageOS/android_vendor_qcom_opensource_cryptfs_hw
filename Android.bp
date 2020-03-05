@@ -21,7 +21,7 @@ cc_library_shared {
     shared_libs: commonSharedLibraries,
 
     owner: "qti",
-    system_ext_specific: true,
+    product_specific: true,
 }
 
 cc_library_headers {
