@@ -22,6 +22,30 @@
       "revId": "4bdebdadb363df023970b5ccc070ca49a2c75b73",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "550a0bc0_9f7004fa",
+        "filename": "cryptfs_hw.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 16185
+      },
+      "writtenOn": "2021-02-26T17:23:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "92321097_d20fe7dc",
+      "range": {
+        "startLine": 40,
+        "startChar": 0,
+        "endLine": 41,
+        "endChar": 38
+      },
+      "revId": "4bdebdadb363df023970b5ccc070ca49a2c75b73",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
     }
   ]
 }
